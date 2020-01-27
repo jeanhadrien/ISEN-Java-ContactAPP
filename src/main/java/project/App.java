@@ -48,6 +48,7 @@ public class App extends Application
 
         String x = null,y = null;
         
+        /*
         Form loginForm = Form.of(
                 Group.of(
                         Field.ofStringType(x)
@@ -57,7 +58,7 @@ public class App extends Application
                                 .required("This field can't be empty")
                 )
         ).title("Login");
-        root.getChildren().add(new FormRenderer(loginForm));
+        root.getChildren().add(new FormRenderer(loginForm)); */
         
         ListView<String> listView = new ListView<String>();
         listView.getItems().add("xd");
@@ -70,13 +71,14 @@ public class App extends Application
         stage.show();
         
     }
-    
+        
     public static void main( String[] args )
     {
     	
         System.out.println( "Java2 class final project! " + System.getProperty("java.version") );
     	path = FileSystems.getDefault().getPath("");
-    	System.out.println(path.toUri());
-    	launch();
+    	System.out.println(path.toAbsolutePath());
+    	    	    	
+    	//launch();
     }
 }
