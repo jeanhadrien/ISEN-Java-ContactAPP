@@ -40,16 +40,7 @@ public class App extends Application {
 		mainStage.setTitle("Contact Manager");
 		mainStage.getIcons().add(new Image(path.toUri() + "resources/icon.png"));
 		Pane root = new Pane();
-
-		String javaVersion = System.getProperty("java.version");
-		String javafxVersion = System.getProperty("javafx.version");
-
 		Pane root2 = new Pane();
-
-		Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-		root.getChildren().add(l);
-
-		String x = null, y = null;
 
 		/*
 		 * Form loginForm = Form.of( Group.of( Field.ofStringType(x) .label("Username"),
@@ -70,6 +61,9 @@ public class App extends Application {
 
 		App.Logging.init();
 		print("XD");
+		
+		Sql.testStatement("SELECT * FROM contactapp.contact;");
+
 	}
 
 	public static void main(String[] args) {
@@ -77,15 +71,23 @@ public class App extends Application {
 		System.out.println("Java2 class final project! " + System.getProperty("java.version"));
 		path = FileSystems.getDefault().getPath("");
 		System.out.println(path.toAbsolutePath());
+		
+		// recuperer sql connection
+
+		// recuperer contactapp et la table contact ou creer
+		
+		// recuperer les donnees
+		
 
 		launch();
+
 	}
 
 	public static void print(String s) {
 		App.Logging.add(s);
 	}
 
-	private static class Logging {
+	public static class Logging {
 		static private List<String> list;
 		static private int size = 100;
 		static private Stage stage;
@@ -107,7 +109,7 @@ public class App extends Application {
 			App.Logging.stage.show();
 		}
 
-		private static void add(String s) {
+		public static void add(String s) {
 			if (!App.debug)
 				return;
 			App.Logging.view.getItems().add(0, s);
@@ -125,4 +127,20 @@ public class App extends Application {
 
 	}
 
+	private static class MySQLConnection{
+		static private Stage stage;
+		static private Scene scene;
+		static private Pane pane;
+		
+		public static void init() {
+			App.Logging.stage = new Stage();
+			App.Logging.pane = new Pane();
+			App.Logging.scene = new Scene(new VBox(App.Logging.pane), 248, 400);
+			App.Logging.stage.setTitle("Setup SQL Connection");
+			App.Logging.stage.setScene(App.Logging.scene);
+			App.Logging.stage.show();
+		}
+		
+	}
+	
 }
