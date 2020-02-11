@@ -1,5 +1,8 @@
 package project;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.sql.SQLException;
@@ -7,9 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -34,17 +40,20 @@ import javafx.stage.Stage;
  */
 public class App extends Application {
 
-	static protected Path path;
+	public static Path path;
 	static boolean debug = true;
 
 	@Override
 	public void start(Stage mainStage) {
-
+		
+		
 		Config.load();
+		SQLConfigWindow sqlconfig = new SQLConfigWindow();
 		
 		App.ContactApp.init();
 		App.Logging.init();
-		App.SQLSetupConnectionWindow.init();
+		App.NotificationWindow.init();
+		App.ChoiceWindow.init();
 		App.print("JavaFx init successful");
 
 		Sql.init();
@@ -58,7 +67,7 @@ public class App extends Application {
 		System.out.println("Java2 class final project! " + System.getProperty("java.version"));
 		path = FileSystems.getDefault().getPath("");
 		System.out.println(path.toAbsolutePath());
-		
+		System.out.println(path.toAbsolutePath().resolve("oui.png").toString());
 		// recuperer sql connection
 
 		// recuperer contactapp et la table contact ou creer
@@ -137,13 +146,42 @@ public class App extends Application {
 
 	}
 
-	
-	private static class SQLSetupConnectionWindow{
-		static private Stage stage;
-		static private Scene scene;
-		static private Pane pane;
+	public static class SQLConfigWindow {
 		
+		private static SQLConfigWindow controller;
+		private static Scene scene;
+		private static Stage stage;
+		
+
+		public class Controller{
+		    @FXML
+		    public TextField serverField;
+
+		    @FXML
+		    public TextField databaseField;
+
+		    @FXML
+		    public TextField userField;
+
+		    @FXML
+		    public PasswordField passwordField;
+
+		    @FXML
+		    public GridPane pane;
+
+		    @FXML
+		    public TextField portField;
+		    	
+		}
+
 		public static void init() {
+
+		}
+		
+		public void myInit() {
+
+	    
+			/*
 			stage = new Stage();
 			pane = new Pane();
 		    // Instantiate a new Grid Pane
@@ -214,7 +252,10 @@ public class App extends Application {
 		    submitButton.setDefaultButton(true);
 		    submitButton.setPrefWidth(100);
 		    
+		    Label errorField = new Label("");
+		    
 		    submitButton.setOnAction( click -> {
+		    	submitButton.setDisable(true);
 		    	
 		    	String formUser = userField.getText();
 		    	String formServerName = serverField.getText();
@@ -225,34 +266,69 @@ public class App extends Application {
 		    	if (formPort.matches(Contact.Regex.NUMBER)) {
 			    	int formPortInt = Integer.parseInt(formPort);
 			    	
-			    	if (formPortInt > 0 && formPortInt<=65535
-			    			&& (formUser+formServerName+formDatabase).matches(Contact.Regex.BASIC) ) {
+			    	//
+			    	
+			    	//
+			    	// NEED TO CHEK INPUT
+			    	if (formPortInt > 0 && formPortInt<=65535 ) {
+			    		
+			    		boolean proceed = true;
 			    		try {
 							Sql.setDataSource(formServerName, formPortInt, formDatabase, formUser,formPassword );
 						} catch (SQLException e) {
 							App.print("Error setting datasource");
 							e.printStackTrace();
+							errorField.setText(errorField.getText()+"\nCouldn't create SQL DataSource, please check your input.");
+						    return;
 						}
-			    		finally {
+			    		
+			    		if (Sql.isConnectionValid()) {
+			    			
 					    	Config.setKey("Username", userField.getText());
 					    	Config.setKey("ServerName", serverField.getText());
 					    	Config.setKey("Database", databaseField.getText());
 					    	Config.setKey("Port", Integer.parseInt(portField.getText()));
-							Sql.executeLiteralStatement("SELECT * FROM contactapp.contact;");
-
+					    	
+					    	try {
+								Sql.executeLiteralStatement("SELECT 1 FROM "+formDatabase+".contact LIMIT 1;");
+								//success finding schema
+								App.print("Successfuly connected to database");
+								stage.hide();
+						    	submitButton.setDisable(false);
+								return;
+							} catch (SQLException e) {
+								App.print("Couldn't connect to database");
+								errorField.setText(errorField.getText()+"\nCouldn't find contact database, please check your input.");
+								App.ChoiceWindow.askChoice("Couldnt find contact table, would you like to create it?");
+								e.printStackTrace();
+						    	submitButton.setDisable(false);
+							}
+			    		}
+			    		else {
+			    			if(Sql.errorCode == 1045) {
+			    				App.NotificationWindow.notify("Error in username/password combination.");
+			    			}
+			    			else if(Sql.errorCode == 1049) {
+			    				App.ChoiceWindow.askChoice("Couldn't find database, would you like to create it?");
+			    			}
+			    			
+			    			submitButton.setDisable(false);
+							errorField.setText(errorField.getText()+"\nCouldn't connect to MySQL, please check your database exists");
+							return;
 			    		}
 			    		
 			    	}
+			    	else {
+					    serverField.clear();
+					    databaseField.clear();
+					    userField.clear();
+					    passwordField.clear();
+			    	}
 		    	}
-		    	
 		    	else {
-				    serverField.clear();
 				    portField.clear();
-				    databaseField.clear();
-				    userField.clear();
-				    passwordField.clear();
 		    	}
-
+			
 		    });
 		    
 		    
@@ -260,18 +336,103 @@ public class App extends Application {
 		    GridPane.setHalignment(submitButton, HPos.CENTER);
 		    GridPane.setMargin(submitButton, new Insets(20, 0,20,0));
 		    
-			scene = new Scene(gridPane, 500, 400);
+			scene = new Scene(new VBox(gridPane,errorField), 500, 400);
 			stage.setTitle("Setup SQL Connection");
 			stage.setScene(scene);
 			stage.show();
-			
+			*/
 			
 		}
 		
-		
-		
 	}
 	
+	private static class NotificationWindow{
+		static private Stage stage;
+		static private Scene scene;
+		static private Pane pane;
+		static private Label label;
+		
+		public static void init() {
+			stage = new Stage();
+			pane = new Pane();
+			label = new Label("");
+			
+			
+			Button button = new Button("Ok");
+			button.setOnAction(click -> {
+				stage.hide(); 
+			});
+			button.setPrefHeight(40);
+		    button.setPrefWidth(100);
+		    
+			stage.setTitle("z");
+			scene = new Scene(new HBox(label,button), 200, 200);
+			stage.setScene(scene);
+			stage.hide();
+		}
+		
+		public static void notify(String msg) {
+			label.setText(msg);
+			stage.show();
+			stage.setAlwaysOnTop(true); 
+			stage.setAlwaysOnTop(false);
+			return;
+		}
+	}
+	
+	private static class ChoiceWindow {
+		
+		static private Stage stage;
+		static private Scene scene;
+		static private Pane pane;
+		static private Label label;
+		static private boolean gotChoice = false;
+		static private boolean choice = false;
+		
+		public static void init() {
+			stage = new Stage();
+			pane = new Pane();
+			label = new Label("");
+			
+			Button buttonYes = new Button("Yes");
+			buttonYes.setOnAction(click -> {
+				gotChoice = true;
+				choice = true;
+				stage.hide();
+			});
+			buttonYes.setPrefHeight(40);
+		    buttonYes.setPrefWidth(100);
+		    
+			Button buttonNo = new Button("No");
+			buttonNo.setOnAction(click -> {
+				gotChoice = true;
+				choice = false;
+				stage.hide();
+			});
+			buttonNo.setPrefHeight(40);
+			buttonNo.setPrefWidth(100);
+		    
+			stage.setTitle("");
+			scene = new Scene(new VBox(label, new HBox(buttonYes,buttonNo)), 200, 200);
+			stage.setScene(scene);
+			stage.hide();
+		}
+		
+		public static void askChoice(String s) {
+			label.setText(s);
+			stage.show();
+			stage.setAlwaysOnTop(true); stage.setAlwaysOnTop(false);
+		}
+		
+		public static boolean getChoice() {
+			if (gotChoice) {
+				if (choice) {return true;}
+				else {return false;}
+			}
+			else {throw new IllegalStateException("Trying to get choice when no questions were asked.");}
+		}
+		
+	}
 }
 
 

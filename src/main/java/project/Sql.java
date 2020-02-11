@@ -11,7 +11,8 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 public class Sql {
 
 	private static MysqlDataSource dataSource;
-
+	public static int errorCode = 0;
+	
 	public static void init() {
 	}
 	
@@ -31,7 +32,20 @@ public class Sql {
 		return dataSource;
 	}	
 	
-	public static ResultSet executeLiteralStatement(String s) {
+	public static boolean isConnectionValid() {
+		try (Connection connection = Sql.getDataSource().getConnection()) {
+			if (connection.isClosed()){
+				return false;
+			}
+		} catch (SQLException e) {
+			errorCode = e.getErrorCode();
+			App.print(Integer.toString(e.getErrorCode()));
+			return false;
+		}
+		return true;
+	}
+	
+	public static ResultSet executeLiteralStatement(String s) throws SQLException {
 		try (Connection connection = Sql.getDataSource().getConnection()) {
 			
 			try(PreparedStatement statement = connection.prepareStatement(s)){
@@ -41,14 +55,10 @@ public class Sql {
 					App.print("SUCCESS : "+s);
 					return results;
 				}
-			}		
+			}
 			
 			
-		} catch (SQLException e) {
-			App.print("Error connecting to database");
-			e.printStackTrace();
-		} 
-		return null;
+		}
 
 	}
 	
