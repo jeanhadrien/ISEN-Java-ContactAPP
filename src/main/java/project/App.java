@@ -37,9 +37,8 @@ public class App extends Application {
 
 	@Override
 	public void start(Stage mainStage) {
-
-		Test x = new Test();
-		x.init();
+		
+		SQLConfigWindow.init();
 		
 		Config.load();
 		App.ContactApp.init();
@@ -137,7 +136,8 @@ public class App extends Application {
 		}
 
 	}
-
+	/*
+	
 	public static class SQLConfigWindow {
 		
 		private static SQLConfigWindow controller;
@@ -170,10 +170,15 @@ public class App extends Application {
 
 		}
 		
+		public void load2() {
+			// TODO Auto-generated method stub
+			
+		}
+
 		public void myInit() {
 
 	    
-			/*
+
 			stage = new Stage();
 			pane = new Pane();
 		    // Instantiate a new Grid Pane
@@ -332,11 +337,13 @@ public class App extends Application {
 			stage.setTitle("Setup SQL Connection");
 			stage.setScene(scene);
 			stage.show();
-			*/
+			
 			
 		}
-		
+	
 	}
+
+	*/
 	
 	private static class NotificationWindow{
 		static private Stage stage;
