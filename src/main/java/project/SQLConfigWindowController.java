@@ -27,7 +27,6 @@ public class SQLConfigWindowController {
     
     @FXML
     private void connectButtonPressed() {
-
     	SQLConfigWindow.Form form = new SQLConfigWindow.Form(serverField, databaseField, userField, passwordField, portField); 
     	SQLConfigWindow.getForm(form);
     }
