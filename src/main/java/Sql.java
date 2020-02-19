@@ -38,7 +38,6 @@ public class Sql {
 			}
 		} catch (SQLException e) {
 			errorCode = e.getErrorCode();
-			App.print(Integer.toString(e.getErrorCode()));
 			return false;
 		}
 		return true;
@@ -51,7 +50,6 @@ public class Sql {
 				//statement.setString(parameterIndex, x);
 				
 				try(ResultSet results = statement.executeQuery()){
-					App.print("SUCCESS : "+s);
 					return results;
 				}
 			}

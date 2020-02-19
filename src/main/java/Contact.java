@@ -34,7 +34,6 @@ public class Contact {
 				this.last = last;
 			}
 			else {
-				App.print("Invalid LastName");
 				throw new IllegalArgumentException("Invalid LastName");
 			}
 		}
@@ -44,7 +43,6 @@ public class Contact {
 				this.first = first;
 			}
 			else {
-				App.print("Invalid FirstName");
 				throw new IllegalArgumentException("Invalid FirstName");
 			}
 		}
@@ -54,7 +52,6 @@ public class Contact {
 				this.nick = nick;
 			}
 			else {
-				App.print("Invalid NickName");
 				throw new IllegalArgumentException("Invalid NickName");
 			}
 		}
@@ -77,7 +74,6 @@ public class Contact {
 				intMonth = Integer.parseInt(month.trim());
 
 			} catch (NumberFormatException nfe) {
-				App.print("Can't convert Date strings to ints");
 				throw new NumberFormatException("Can't convert Date strings to ints");
 			} finally {
 				this.set(intYear, intMonth, intDay);
@@ -91,7 +87,6 @@ public class Contact {
 		public void set(int year, int month, int day) {
 			if (this.day > 30 || this.day <= 0 || this.month > 12 || this.month <= 0 || this.year > 2020
 					|| this.year <= 1900 || (this.month == 2 && this.day > 28)) {
-				App.print("Invalid date values");
 				throw new IllegalArgumentException("Invalid date values");
 			} else {
 				this.day = day;
@@ -131,7 +126,6 @@ public class Contact {
 				this.postal = postal;
 				this.country = country;
 			} else {
-				App.print("Invalid Address");
 				throw new IllegalArgumentException("Invalid Address");
 			}
 		}
@@ -158,7 +152,6 @@ public class Contact {
 			if (s.matches(Regex.PHONE) && s.length() <= db.length_Phone) {
 				this.number = s;
 			} else {
-				App.print("Invalid Phone");
 				throw new IllegalArgumentException("Invalid Phone");
 			}
 		}
@@ -185,7 +178,6 @@ public class Contact {
 			if (s.matches(Regex.EMAIL) && s.length() <= db.length_Email) {
 				this.email = s;
 			} else {
-				App.print("Invalid Email");
 				throw new IllegalArgumentException("Invalid Email");
 			}
 		}

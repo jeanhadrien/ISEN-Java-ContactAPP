@@ -35,16 +35,16 @@ public class App extends Application {
 
 	@Override
 	public void start(Stage mainStage) {
-		
-		SQLConfigWindow.init();
-		
+
+
 		Config.load();
 		App.ContactApp.init();
-		App.Logging.init();
+
 		App.NotificationWindow.init();
 		App.ChoiceWindow.init();
-		App.print("JavaFx init successful");
 
+
+		SQLConfigWindow.init();
 		Sql.init();
 		
 
@@ -66,9 +66,6 @@ public class App extends Application {
 		launch();
 	}
 
-	public static void print(String s) {
-		App.Logging.add(s);
-	}
 	
 	private static class ContactApp{
 		static private Stage stage;
@@ -92,47 +89,7 @@ public class App extends Application {
 			
 		}
 	}
-	
-	private static class Logging {
-		static private List<String> list;
-		static private int size = 100;
-		static private Stage stage;
-		static private Scene scene;
-		static private Pane pane;
-		static private ListView<String> view;
 
-		public static void init() {
-			if (!App.debug)
-				return;
-			list = new ArrayList<String>();
-			stage = new Stage();
-			pane = new Pane();
-			view = new ListView<String>();
-			pane.getChildren().add(view);
-			scene = new Scene(new VBox(pane), 248, 400);
-			stage.setTitle("Console");
-			stage.setScene(scene);
-			stage.show();
-			
-		}
-
-		public static void add(String s) {
-			if (!App.debug)
-				return;
-			view.getItems().add(0, s);
-			if (view.getItems().size() > size) {
-				view.getItems().remove(size);
-			}
-			return;
-		}
-
-		private static void clear() {
-			if (!App.debug)
-				return;
-			view.getItems().clear();
-		}
-
-	}
 	/*
 	
 	public static class SQLConfigWindow {
