@@ -11,11 +11,16 @@ public class Sql {
 
 	private static MysqlDataSource dataSource;
 	public static int errorCode = 0;
-	
+	private static boolean connected = false;
+
 	public static void init() {
 	}
-	
-	public static void setDataSource(String server,int port, String db, String user, String pass) throws SQLException {
+
+	public static void connect(DataSource dataSource){
+
+	}
+
+	private static void setDataSource(String server,int port, String db, String user, String pass) throws SQLException {
 		MysqlDataSource myDataSource = new MysqlDataSource();
 		myDataSource.setServerTimezone("UTC");
 		myDataSource.setServerName(server);
@@ -26,10 +31,10 @@ public class Sql {
 		
 		dataSource = myDataSource;
 	}
-	
-	public static DataSource getDataSource() {
+
+	private static DataSource getDataSource() {
 		return dataSource;
-	}	
+	}
 	
 	public static boolean isConnectionValid() {
 		try (Connection connection = Sql.getDataSource().getConnection()) {

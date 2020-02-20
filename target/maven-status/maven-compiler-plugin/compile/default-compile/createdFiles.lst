@@ -2,13 +2,13 @@ Sql.class
 SQLConfigWindowController.class
 Database.class
 Contact$Address.class
+FileManager.class
 SQLConfigWindow.class
 App.class
 Contact$Email.class
 Contact$Name.class
 App$ContactApp.class
 Config.class
-App$Logging.class
 Contact$Birth.class
 Contact$Phone.class
 Gui.class

@@ -1,9 +1,5 @@
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.util.Dictionary;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -44,7 +40,7 @@ public class Config {
 		
 		JSONParser parser = new JSONParser();
 
-		try (FileReader reader = new FileReader(FileManager.getResource(PATHTOFILE).getPath())) {
+		try (FileReader reader = new FileReader(FileManager.getResourceURL(PATHTOFILE).getPath())) {
 			config = (JSONObject) parser.parse(reader);
 
 		} catch (IOException | ParseException e) {

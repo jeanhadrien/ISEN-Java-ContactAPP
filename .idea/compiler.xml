@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="contactapp" />
         <module name="ISEN-Java-ContactAPP" />
+        <module name="project" />
       </profile>
     </annotationProcessing>
   </component>
