@@ -1,5 +1,6 @@
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -23,11 +24,21 @@ public class SQLConfigWindowController {
 
     @FXML
     private TextField portField;
-    
+
+    @FXML
+    private Button connectButton;
+
     @FXML
     private void connectButtonPressed() {
-    	SQLConfigWindow.Form form = new SQLConfigWindow.Form(serverField, databaseField, userField, passwordField, portField); 
-    	SQLConfigWindow.getForm(form);
+        SQLConfigWindow.Form form = new SQLConfigWindow.Form(serverField, databaseField, userField, passwordField, portField);
+        SQLConfigWindow.gotForm(form);
     }
 
+    public void disableForm(){
+
+    }
+
+    public void enableForm(){
+
+    }
 }

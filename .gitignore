@@ -4,10 +4,11 @@
 .settings/
 
 # Intellij
-.idea/
+.idea/*
 *.iml
 *.iws
 
+target/*
 # Mac
 .DS_Store
 
