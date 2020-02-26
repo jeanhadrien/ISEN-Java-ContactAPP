@@ -8,10 +8,11 @@
 *.iml
 *.iws
 
-target/*
+
 # Mac
 .DS_Store
 
 # Maven
 log/
 target/
+.idea/workspace.xml

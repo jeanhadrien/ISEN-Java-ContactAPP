@@ -91,7 +91,7 @@ public class SQLConfigWindow {
 			&& form.portField.matches(Regex.NUMBER_WHOLE)
 			&& form.serverField.matches(Regex.IPV4)
 			&& form.userField.matches(Regex.USERNAME)){
-			return true
+			return true;
 		}
 		else return false;
 	}
