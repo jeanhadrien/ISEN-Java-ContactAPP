@@ -4,7 +4,8 @@
 .settings/
 
 # Intellij
-.idea/*
+.idea/**
+.idea/
 *.iml
 *.iws
 
@@ -14,5 +15,6 @@
 
 # Maven
 log/
+target/**
 target/
 .idea/workspace.xml
