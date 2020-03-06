@@ -3,10 +3,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.GaussianBlur;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -47,7 +44,7 @@ public class SQLConfigWindow {
     private static Stage stage;
     public static Parent parent;
     private static Scene scene;
-    private static SQLConfigWindowController controller;
+    public static SQLConfigWindowController controller;
 
     public static void init() {
         stage = new Stage();
@@ -63,7 +60,8 @@ public class SQLConfigWindow {
             e.printStackTrace();
         }
 
-        controller = loader.getController();
+        Object temp = loader.getController();
+        controller = (SQLConfigWindowController) temp;
         scene = new Scene(parent);
         stage.setTitle("SQL Config");
         stage.setScene(scene);
@@ -75,6 +73,7 @@ public class SQLConfigWindow {
 
         if (matchesRegex(form)) {
             if (Sql.tryToConnect(form)) {
+                ContactView.isConnected();
                 stage.hide();
                 controller.clearPassword();
                 controller.enableForm();
@@ -89,6 +88,9 @@ public class SQLConfigWindow {
 
     }
 
+    public static void show(){
+        stage.show();
+    }
     public static void clearPassword(){
         controller.clearPassword();
     }

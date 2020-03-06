@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Database {
 
-	Database() {
+	public Database() {
 		this.contacts = new ArrayList<Contact>();
 	}
 

@@ -27,15 +27,12 @@ public class App extends Application {
 	@Override
 	public void start(Stage mainStage) {
 
-
 		Config.load();
-		App.ContactApp.init();
-
-		App.NotificationWindow.init();
-		App.ChoiceWindow.init();
 
 		Error.init();
+		ContactView.init();
 		SQLConfigWindow.init();
+
 		Sql.init();
 		
 
