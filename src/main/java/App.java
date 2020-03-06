@@ -23,10 +23,12 @@ public class App extends Application {
 
 	public static Path path;
 	public static Image icon = new Image(FileManager.getResourcePathAsString("icon.png"));
+	public static Database localDatabase;
 
 	@Override
 	public void start(Stage mainStage) {
 
+		localDatabase = new Database();
 		Config.load();
 
 		Error.init();

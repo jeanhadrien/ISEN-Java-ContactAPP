@@ -60,6 +60,10 @@ public class SQLConfigWindow {
             e.printStackTrace();
         }
 
+        stage.setOnCloseRequest(event -> {
+                event.consume();
+        });
+
         Object temp = loader.getController();
         controller = (SQLConfigWindowController) temp;
         scene = new Scene(parent);
@@ -108,6 +112,14 @@ public class SQLConfigWindow {
                 && form.userField.matches(Regex.USERNAME)) {
             return true;
         } else return false;
+    }
+
+    public static void terminate(){
+        stage.hide();
+        stage = null;
+        parent = null;
+        scene = null;
+        controller = null;
     }
 
 

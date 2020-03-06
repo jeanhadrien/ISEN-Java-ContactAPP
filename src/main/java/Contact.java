@@ -1,13 +1,22 @@
 public class Contact {
 
-	Contact(Database db) {
-		this.db = db;
+	Contact() {
 	}
-	
-	private Database db;
 
-	public class Name {
+	private Name name;
+	private Birth birth;
+	private Address address;
+	private Phone phone;
+	private Email email;
+
+	public static class Name {
 		private String last, first, nick;
+
+		Name(String first, String last, String nick){
+			setFirst(first);
+			setLast(last);
+			setNick(nick);
+		}
 
 		public String getLast() {
 			return last;
@@ -22,7 +31,7 @@ public class Contact {
 		}
 
 		public void setLast(String last) {
-			if (last.matches(Regex.BASIC) && last.length()<= db.length_Name) {
+			if (last.matches(Regex.BASIC) && last.length()<= Database.Lengths.NAME) {
 				this.last = last;
 			}
 			else {
@@ -31,7 +40,7 @@ public class Contact {
 		}
 
 		public void setFirst(String first) {
-			if (first.matches(Regex.BASIC) && first.length()<= db.length_Name) {
+			if (first.matches(Regex.BASIC) && first.length()<= Database.Lengths.NAME) {
 				this.first = first;
 			}
 			else {
@@ -40,7 +49,7 @@ public class Contact {
 		}
 
 		public void setNick(String nick) {
-			if (nick.matches(Regex.BASIC) && nick.length()<= db.length_Name) {
+			if (nick.matches(Regex.BASIC) && nick.length()<= Database.Lengths.NAME) {
 				this.nick = nick;
 			}
 			else {
@@ -55,7 +64,7 @@ public class Contact {
 
 	}
 
-	public class Birth {
+	public static class Birth {
 		private int day = 0, month = 0, year = 0;
 
 		Birth(String year, String month, String day) throws NumberFormatException, IllegalArgumentException {
@@ -95,7 +104,7 @@ public class Contact {
 
 	}
 
-	public class Address {
+	public static class Address {
 		private String street, city, state, postal, country;
 
 		Address(String street, String city, String state, String postal, String country)
@@ -111,7 +120,7 @@ public class Contact {
 				throws IllegalArgumentException {
 			if (street.matches(Regex.BASIC) && city.matches(Regex.WORD) && state.matches(Regex.WORD)
 					&& postal.matches(Regex.BASIC) && country.matches(Regex.WORD) && street.length() + city.length()
-							+ state.length() + postal.length() + country.length() <= db.length_Address) {
+							+ state.length() + postal.length() + country.length() <= Database.Lengths.ADDRESS) {
 				this.street = street;
 				this.city = city;
 				this.state = state;
@@ -129,19 +138,19 @@ public class Contact {
 
 	}
 
-	class Phone {
+	public static class Phone {
 		private String number;
 
 		Phone(String s) throws IllegalArgumentException {
 			this.set(s);
 		}
 
-		String get() {
+		public String get() {
 			return this.number;
 		}
 
 		void set(String s) throws IllegalArgumentException {
-			if (s.matches(Regex.PHONE) && s.length() <= db.length_Phone) {
+			if (s.matches(Regex.PHONE) && s.length() <= Database.Lengths.PHONE) {
 				this.number = s;
 			} else {
 				throw new IllegalArgumentException("Invalid Phone");
@@ -155,7 +164,7 @@ public class Contact {
 
 	}
 
-	class Email {
+	public static class Email {
 		private String email = "null";
 
 		Email(String s) throws IllegalArgumentException {
@@ -167,7 +176,7 @@ public class Contact {
 		}
 
 		void set(String s) throws IllegalArgumentException {
-			if (s.matches(Regex.EMAIL) && s.length() <= db.length_Email) {
+			if (s.matches(Regex.EMAIL) && s.length() <= Database.Lengths.EMAIL) {
 				this.email = s;
 			} else {
 				throw new IllegalArgumentException("Invalid Email");
@@ -179,6 +188,46 @@ public class Contact {
 			return this.email;
 		}
 
+	}
+
+	public Name getName() {
+		return name;
+	}
+
+	public void setName(String first, String last, String nick) {
+		this.name = new Name(first,last,nick);
+	}
+
+	public Birth getBirth() {
+		return birth;
+	}
+
+	public void setBirth(String year, String month, String day) {
+		this.birth = new Birth(year, month, day);
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(String street, String city, String state, String postal, String country) {
+		this.address = new Address(street, city, state, postal, country);
+	}
+
+	public Phone getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String s) {
+		this.phone = new Phone(s);
+	}
+
+	public Email getEmail() {
+		return email;
+	}
+
+	public void setEmail(String s) {
+		this.email = new Email(s);
 	}
 
 }

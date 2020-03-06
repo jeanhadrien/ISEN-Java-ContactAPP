@@ -11,6 +11,9 @@ public class Sql {
     private static MysqlDataSource dataSource;
     private static int errorCode = 0;
     private static boolean connected = false;
+    private static String table;
+
+    public static String getTableName() { return table; }
 
     private static DataSource getDataSource() {
         return dataSource;
@@ -44,6 +47,7 @@ public class Sql {
 
         if (isConnectionValid(formDataSource)) {
             if (couldRetrieveDatabase(formDataSource.getDatabaseName(), formDataSource)) {
+                table = formDataSource.getDatabaseName()+".contact";
                 dataSource = formDataSource;
                 return true;
             } else {

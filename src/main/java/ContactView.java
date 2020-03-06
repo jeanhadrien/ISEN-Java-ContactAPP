@@ -1,5 +1,3 @@
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -30,6 +28,13 @@ public class ContactView {
             e.printStackTrace();
         }
 
+        stage.setOnCloseRequest(event -> {
+            //TODO finir
+            terminate();
+            SQLConfigWindow.terminate();
+            event.consume();
+        });
+
         Object temp = loader.getController();
         controller = (ContactViewController) temp;
         isNotConnected();
@@ -42,14 +47,28 @@ public class ContactView {
     public static void isConnected(){
         parent.setEffect(null);
         parent.setDisable(false);
+        App.localDatabase = new Database();
+        App.localDatabase.pullFromRemote();
     }
 
     public static void isNotConnected(){
+        App.localDatabase.pushToRemote();
         ColorAdjust adj = new ColorAdjust(0, 0, -0.05, 0);
         GaussianBlur blur = new GaussianBlur(10); // 55 is just to show edge effect more clearly.
         adj.setInput(blur);
         parent.setEffect(adj);
         parent.setDisable(true);
     }
+
+    public static void terminate(){
+        stage.hide();
+        stage = null;
+        parent = null;
+        scene = null;
+        controller = null;
+    }
+
+
+
 
 }
