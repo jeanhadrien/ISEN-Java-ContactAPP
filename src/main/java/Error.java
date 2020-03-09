@@ -66,6 +66,28 @@ public class Error {
         stage.show();
     }
 
+    public static void create(String notif, Parent origin){
+        ColorAdjust adj = new ColorAdjust(0, 0, -0.05, 0);
+        GaussianBlur blur = new GaussianBlur(10); // 55 is just to show edge effect more clearly.
+        adj.setInput(blur);
+        origin.setEffect(adj);
+        origin.setDisable(true);
+
+        controller.button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                origin.setEffect(null);
+                origin.setDisable(false);
+                stage.hide();
+            }
+        });
+
+        controller.setText(notif);
+        controller.text.setWrapText(true);
+        stage.sizeToScene();
+        stage.show();
+    }
+
     public static void onClick() {
         stage.hide();
     }

@@ -5,17 +5,19 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class Sql {
 
     private static MysqlDataSource dataSource;
     private static int errorCode = 0;
-    private static boolean connected = false;
     private static String table;
 
-    public static String getTableName() { return table; }
+    public static String getTableName() {
+        return table;
+    }
 
-    private static DataSource getDataSource() {
+    public static DataSource getDataSource() {
         return dataSource;
     }
 
@@ -40,19 +42,19 @@ public class Sql {
             formDataSource.setServerTimezone("UTC");
 
         } catch (SQLException e) {
-            Error.create("Error setting timezone to UTC in datasource.","None",SQLConfigWindow.parent);
+            Error.create("Error setting timezone to UTC in datasource.", "None", SQLConfigWindow.parent);
             parseSQLException(e);
             return false;
         }
 
         if (isConnectionValid(formDataSource)) {
             if (couldRetrieveDatabase(formDataSource.getDatabaseName(), formDataSource)) {
-                table = formDataSource.getDatabaseName()+".contact";
+                table = formDataSource.getDatabaseName() + ".contact";
                 dataSource = formDataSource;
                 return true;
             } else {
                 if (errorCode == 1146) {
-                    Error.create("Contact table wasn't created.","Create table using provided createTable.sql script and retry.",SQLConfigWindow.parent);
+                    Error.create("Contact table wasn't created.", "Create table using provided createTable.sql script and retry.", SQLConfigWindow.parent);
                     // TODO please create contact table using provided script.
                 }
                 return false;
@@ -61,14 +63,14 @@ public class Sql {
 
         } else {
             if (errorCode == 1045) {
-                Error.create("Incorrect username or password.","Check your input.",SQLConfigWindow.parent);
+                Error.create("Incorrect username or password.", "Check your input.", SQLConfigWindow.parent);
                 SQLConfigWindow.clearPassword();
                 // remove pw
             } else if (errorCode == 1049) {
-                Error.create("Couldn't find database schema.","Create schema using provided createSchema.sql script and retry using 'contactapp' in database name. ",SQLConfigWindow.parent);
+                Error.create("Couldn't find database schema.", "Create schema using provided createSchema.sql script and retry using 'contactapp' in database name. ", SQLConfigWindow.parent);
                 //CREATE SCHEMA Chains;
             } else {
-                Error.create("Unhandled SQL Exception","None",SQLConfigWindow.parent);
+                Error.create("Unhandled SQL Exception", "None", SQLConfigWindow.parent);
             }
             return false;
         }
@@ -107,24 +109,5 @@ public class Sql {
         return false;
     }
 
-    public static boolean connected() {
-        return connected;
-    }
-
-    public static ResultSet executeLiteralStatement(String s) throws SQLException {
-        try (Connection connection = Sql.getDataSource().getConnection()) {
-
-            try (PreparedStatement statement = connection.prepareStatement(s)) {
-                //statement.setString(parameterIndex, x);
-
-                try (ResultSet results = statement.executeQuery()) {
-                    return results;
-                }
-            }
-
-
-        }
-
-    }
 
 }

@@ -1,3 +1,5 @@
+import javax.xml.crypto.Data;
+
 public class Contact {
 
 	Contact() {
@@ -8,14 +10,16 @@ public class Contact {
 	private Address address;
 	private Phone phone;
 	private Email email;
+	private int id;
+
 
 	public static class Name {
-		private String last, first, nick;
+		private String last, first;
 
-		Name(String first, String last, String nick){
+		Name(String first, String last){
 			setFirst(first);
 			setLast(last);
-			setNick(nick);
+
 		}
 
 		public String getLast() {
@@ -26,9 +30,6 @@ public class Contact {
 			return first;
 		}
 
-		public String getNick() {
-			return nick;
-		}
 
 		public void setLast(String last) {
 			if (last.matches(Regex.BASIC) && last.length()<= Database.Lengths.NAME) {
@@ -48,18 +49,10 @@ public class Contact {
 			}
 		}
 
-		public void setNick(String nick) {
-			if (nick.matches(Regex.BASIC) && nick.length()<= Database.Lengths.NAME) {
-				this.nick = nick;
-			}
-			else {
-				throw new IllegalArgumentException("Invalid NickName");
-			}
-		}
 		
 		@Override
 		public String toString() {
-			return "".concat(this.first).concat(" '").concat(this.nick).concat("' ").concat(this.last);
+			return "".concat(this.first).concat(" ").concat(this.last);
 		}		
 
 	}
@@ -85,9 +78,14 @@ public class Contact {
 			return this.toString();
 		}
 
+		public int getDay(){return this.day;}
+		public int getMonth(){return this.month;}
+		public int getYear(){return this.year;}
+
 		public void set(int year, int month, int day) {
-			if (this.day > 30 || this.day <= 0 || this.month > 12 || this.month <= 0 || this.year > 2020
-					|| this.year <= 1900 || (this.month == 2 && this.day > 28)) {
+
+			if (day > 30 || day < 0 || month > 12 || month < 0 || year > 2020
+					|| year <= 1900) {
 				throw new IllegalArgumentException("Invalid date values");
 			} else {
 				this.day = day;
@@ -98,22 +96,35 @@ public class Contact {
 
 		@Override
 		public String toString() {
-			return "".concat(Integer.toString(this.year)).concat("-").concat(Integer.toString(this.month)).concat("-")
-					.concat(Integer.toString(this.day));
+			return "".concat(Integer.toString(this.year)).concat("-").concat(String.format("%1$02d", this.month)).concat("-")
+					.concat(String.format("%1$02d", this.day));
 		}
 
 	}
 
 	public static class Address {
 		private String street, city, state, postal, country;
+		private String address;
 
 		Address(String street, String city, String state, String postal, String country)
 				throws IllegalArgumentException {
 			this.set(street, city, state, postal, country);
 		}
 
+		Address(String s) throws IllegalArgumentException{
+			this.set(s);
+		}
+
 		String get() {
 			return this.toString();
+		}
+
+		public void set(String s){
+			if(s.length()<= Database.Lengths.ADDRESS){
+				this.address = s;
+			} else {
+				throw new IllegalArgumentException("Invalid Address");
+			}
 		}
 
 		public void set(String street, String city, String state, String postal, String country)
@@ -133,7 +144,12 @@ public class Contact {
 
 		@Override
 		public String toString() {
-			return this.street + "\n" + this.city + ", " + this.state + " " + this.postal + "\n" + this.country;
+			if (this.address == null) {
+				return this.street + "\n" + this.city + ", " + this.state + " " + this.postal + "\n" + this.country;
+			}
+			else{
+				return this.address;
+			}
 		}
 
 	}
@@ -193,41 +209,66 @@ public class Contact {
 	public Name getName() {
 		return name;
 	}
-
-	public void setName(String first, String last, String nick) {
-		this.name = new Name(first,last,nick);
+	public void setName(String first, String last) {
+		this.name = new Name(first,last);
 	}
-
+	public void setName(Name n){ this.name = n;}
 	public Birth getBirth() {
 		return birth;
 	}
-
 	public void setBirth(String year, String month, String day) {
 		this.birth = new Birth(year, month, day);
 	}
-
+	public void setBirth(Birth b ){ this.birth = b;}
 	public Address getAddress() {
 		return address;
 	}
-
 	public void setAddress(String street, String city, String state, String postal, String country) {
 		this.address = new Address(street, city, state, postal, country);
 	}
-
+	public void setAddress(Address ad){ this.address = ad;	}
+	public void setAddress(String text) {this.address = new Address(text);}
 	public Phone getPhone() {
 		return phone;
 	}
-
 	public void setPhone(String s) {
 		this.phone = new Phone(s);
 	}
-
+	public void setPhone(Phone p){this.phone = p;}
 	public Email getEmail() {
 		return email;
 	}
-
 	public void setEmail(String s) {
 		this.email = new Email(s);
 	}
+	public void setEmail(Email e){
+		this.email = e;
+	}
+	public int getId(){
+		return id;
+	}
+	public void setId(int s){
+		this.id = s;
+	}
 
+	public static Name toName(String s){
+		return new Name(s.split(" ")[0],s.split(" ")[1]);
+	}
+	public static Birth toBirth(String s){
+		return new Birth(s.split("-")[0],s.split("-")[1],s.split("-")[2]);
+	}
+	public static Address toAddress(String s){
+		return new Address(s);
+	}
+	public static Phone toPhone(String s){
+		return new Phone(s);
+	}
+	public static Email toEmail(String s){
+		return new Email(s);
+	}
+
+	@Override
+	public String toString() {
+		return name.toString();
+	}
 }

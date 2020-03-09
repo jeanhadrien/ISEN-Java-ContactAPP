@@ -82,7 +82,6 @@ public class SQLConfigWindow {
                 controller.clearPassword();
                 controller.enableForm();
             } else {
-                System.out.println("xd");
                 controller.enableForm();
             }
         } else {
