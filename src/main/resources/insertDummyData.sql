@@ -6,5 +6,3 @@ VALUES ('CHARETTE', 'Pierre', '0254740107', '21 Place Napoléon, 53000, LAVAL', 
 
 	INSERT INTO contact (lastname, firstname, phone, address, email, birth)
 VALUES ('GOULET', 'Dominique', '0323579684', '22, rue Reine Elisabeth, 57000, METZ', 'DominiqueGoulet@dayrep.com', date('1977-05-29'));
-	
-    

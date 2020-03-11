@@ -54,6 +54,11 @@ public class ContactViewController {
     }
 
     @FXML
+    private void exportButtonPressed(){
+        ContactView.exportContact(selected);
+    }
+
+    @FXML
     private void deleteButtonPressed(){
         ContactView.deleteContact(selected);
     }
@@ -65,7 +70,6 @@ public class ContactViewController {
 
     @FXML void editContactButtonPressed(){
         if(selected!=null){ ContactEdit.editContact(selected); return;}
-
     }
 
     public ListView<Contact> getList(){

@@ -57,9 +57,16 @@ public class ContactEdit {
         controller.getConfirmButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                App.localDatabase.addContact(controller.getNewContact());
+                try{
+                    App.localDatabase.addContact(controller.getNewContact());
+                }
+                catch(IllegalArgumentException e){
+                    Error.create("Couldn't create contact, please check your input.",ContactEdit.parent);
+                    return;
+                }
                 ContactView.isFocused();
                 stage.hide();
+
             }
         });
     }

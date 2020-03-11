@@ -24,9 +24,9 @@
     <RowConstraints maxHeight="581.0" minHeight="10.0" prefHeight="440.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnSpan="2">
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnSpan="2147483647">
          <children>
-            <ButtonBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="53.0" prefWidth="785.0">
+            <ButtonBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="53.0">
               <buttons>
                   <Button fx:id="sql" mnemonicParsing="false" onAction="#sqlButtonPressed" text="SQL" />
                   <Button fx:id="newContact" mnemonicParsing="false" onAction="#newContactButtonPressed" text="New" />
@@ -35,10 +35,13 @@
                   <Insets />
                </opaqueInsets>
                <VBox.margin>
-                  <Insets left="10.0" right="10.0" />
+                  <Insets left="10.0" />
                </VBox.margin>
             </ButtonBar>
-            <Separator prefWidth="200.0" valignment="BOTTOM" />
+            <Separator prefWidth="200.0" valignment="BOTTOM">
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding></Separator>
          </children>
       </VBox>
       <TilePane prefHeight="425.0" prefWidth="453.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -53,7 +56,7 @@
                   <Insets right="10.0" />
                </TilePane.margin>
             </Button>
-            <Button fx:id="export" mnemonicParsing="false" text="Export">
+            <Button fx:id="export" mnemonicParsing="false" onAction="#exportButtonPressed" text="Export">
                <TilePane.margin>
                   <Insets right="10.0" />
                </TilePane.margin>
@@ -102,17 +105,23 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Text>
-            <Separator prefHeight="34.0" prefWidth="453.0" valignment="BOTTOM" />
+            <Separator prefHeight="34.0" prefWidth="453.0" valignment="BOTTOM">
+               <padding>
+                  <Insets right="10.0" />
+               </padding></Separator>
          </children>
       </VBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1" GridPane.rowSpan="2">
+      <HBox alignment="CENTER_LEFT" GridPane.rowIndex="1" GridPane.rowSpan="2">
          <children>
-            <ListView fx:id="list" prefHeight="563.0" prefWidth="720.0">
+            <ListView fx:id="list" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </HBox.margin>
             </ListView>
-            <Separator halignment="RIGHT" orientation="VERTICAL" prefHeight="583.0" prefWidth="236.0" />
+            <Separator orientation="VERTICAL">
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding></Separator>
          </children>
       </HBox>
    </children>

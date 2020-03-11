@@ -1,5 +1,6 @@
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -132,7 +133,7 @@ public class Database {
 
 	}
 
-	public void addToRemote(ObservableList<Contact> ol){
+	public void addToRemote( ObservableList<Contact> ol){
 		try (Connection connection = Sql.getDataSource().getConnection()) {
 
 			ol.forEach(contact -> {

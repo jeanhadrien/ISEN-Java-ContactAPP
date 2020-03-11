@@ -95,4 +95,17 @@ public class ContactView {
     public static void deleteContact(Contact selected) {
         App.localDatabase.deleteContact(selected);
     }
+
+    public static void pullFromRemote() {
+        App.localDatabase.pullFromRemote();
+    }
+
+    public static void exportContact(Contact selected) {
+        try {
+            Vcard.exportContact(stage,selected);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
