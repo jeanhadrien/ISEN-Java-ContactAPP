@@ -6,10 +6,11 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
 /**
- * Contact application project for java2 class.
- * <p>
- * Jean-Hadrien Damay Lionel Mbanza
+ * Contact Manager application for java2 class.
+ * Lionel MBANZA
+ * Jean-Hadrien DAMAY
  */
+
 public class App extends Application {
 
     public static Path path;
@@ -33,7 +34,6 @@ public class App extends Application {
         ContactView.init();
         ContactEdit.init();
         SQLConfigWindow.init();
-        Sql.init();
 
     }
 

@@ -96,10 +96,6 @@ public class ContactView {
         App.localDatabase.deleteContact(selected);
     }
 
-    public static void pullFromRemote() {
-        App.localDatabase.pullFromRemote();
-    }
-
     public static void exportContact(Contact selected) {
         try {
             Vcard.exportContact(stage, selected);

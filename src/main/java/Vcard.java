@@ -7,7 +7,15 @@ import java.io.IOException;
 
 public class Vcard {
 
-
+    /**
+     * Export contact to .vcf format.
+     * @param stg the stage from where the contact is exported.
+     * @param selected the selected contact to export.
+     * @throws IOException
+     *
+     * TODO : Addres related stuff.
+     *        (currently saved as a single string in Contact so we can't easily get city, postal, etc.)
+     */
     public static void exportContact(Stage stg, Contact selected) throws IOException {
 
         FileChooser fc = new FileChooser();

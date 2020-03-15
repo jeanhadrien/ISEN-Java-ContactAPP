@@ -7,37 +7,17 @@ import java.io.IOException;
 
 public class Config {
 
+
+    /**
+     * Load config from json file.
+     * TODO : Save the config if the SQLConfigWindow input results in successful SQL connection.
+     */
+
     private static final String PATHTOFILE = "config.json";
-    private static final String[] VALID_KEYS = {"Username", "Password", "ServerName", "Database"};
     private static JSONObject config;
 
-    /*
-     * Saves config to PATHTOFILE
-     */
-    public static void save() {
-		/*
-        try (FileWriter file = new FileWriter(PATH + FILENAME)) {
- 
-            file.write(config.toJSONString());
-            file.flush();
- 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-		 */
-    }
-
-    /*
-     * Loads JSON config file from PATH/FILENAME
-     * and stores it as JSONObject in config.
-     */
-
     public static void load() {
-        if (config != null) {
-            config.clear();
-
-        }
+        if (config != null) { config.clear(); }
 
         JSONParser parser = new JSONParser();
 
@@ -48,23 +28,5 @@ public class Config {
             e.printStackTrace();
         }
     }
-
-    public static Object getKey(String key) {
-        return config.get(key);
-    }
-
-    public static void setKey(String key, Object value) {
-        if (config.containsKey(key)) {
-            config.replace(key, value);
-        } else {
-            config.put(key, value);
-        }
-    }
-
-    public static void test() {
-        load();
-
-    }
-
 
 }

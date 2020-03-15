@@ -85,6 +85,7 @@ public class ContactViewController {
     }
 
     public void updateContactDetails(Contact cont) {
+        if (cont == null) return;
         firstname.setText(cont.getName().getFirst());
         lastname.setText(cont.getName().getLast());
         phone.setText(cont.getPhone().get());

@@ -20,15 +20,22 @@ public class Sql {
         return dataSource;
     }
 
-    public static void init() {
-    }
-
+    /**
+     * Load last error code, print stack trace.
+     * @param e
+     */
     public static void parseSQLException(SQLException e) {
         errorCode = e.getErrorCode();
         System.out.println(errorCode);
         e.printStackTrace();
     }
 
+    /**
+     * Method called on connect button.
+     * We show error windows for corresponding SQL error codes.
+     * @param form
+     * @return
+     */
     public static boolean tryToConnect(SQLConfigWindow.Form form) {
         MysqlDataSource formDataSource = new MysqlDataSource();
         formDataSource.setServerName(form.serverField);
@@ -77,6 +84,11 @@ public class Sql {
 
     }
 
+    /**
+     * Tests if datasource is valid
+     * @param ds
+     * @return
+     */
     private static boolean isConnectionValid(DataSource ds) {
         try {
             Connection connection = ds.getConnection();
@@ -87,6 +99,12 @@ public class Sql {
         }
     }
 
+    /**
+     * Tests if table was created.
+     * @param schema
+     * @param ds
+     * @return
+     */
     private static boolean couldRetrieveDatabase(String schema, DataSource ds) {
         try (Connection connection = ds.getConnection()) {
 

@@ -11,6 +11,12 @@ import java.io.IOException;
 
 public class Error {
 
+    /**
+     *  Manages Error / notification windows.
+     *  When an error or notification is created using "create" methods, the window from where its created gets blurred.
+     *  Once the created window is closed, focus goes back to original window.
+     */
+
     private static Stage stage;
     private static Parent parent;
     private static Scene scene;
@@ -39,7 +45,6 @@ public class Error {
         stage.setScene(scene);
 
     }
-
 
     public static void create(String error, String solution, Parent origin) {
 

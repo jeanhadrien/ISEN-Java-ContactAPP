@@ -9,6 +9,10 @@ import java.io.IOException;
 
 public class ContactEdit {
 
+    /**
+     * Manages the window to edit or create a contact.
+     */
+
     public static Parent parent;
     public static ContactEditController controller;
     private static Stage stage;
@@ -45,6 +49,9 @@ public class ContactEdit {
     }
 
 
+    /**
+     * Setup contact creation state.
+     */
     public static void createNew() {
         ContactView.notFocused();
         stage.show();
@@ -66,6 +73,10 @@ public class ContactEdit {
         });
     }
 
+    /**
+     * Setup contact edition state.
+     * @param selected
+     */
     public static void editContact(Contact selected) {
         ContactView.notFocused();
         stage.show();

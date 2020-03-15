@@ -54,6 +54,10 @@ public class ContactEditController {
         birth.setValue(LocalDate.of(cont.getBirth().getYear(), cont.getBirth().getMonth(), cont.getBirth().getDay()));
     }
 
+    /**
+     * Returns contact from fields.
+     * @return created contact.
+     */
     public Contact getNewContact() {
         if (selected != null) {
             throw new IllegalStateException();

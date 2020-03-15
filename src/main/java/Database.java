@@ -9,12 +9,18 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class Database {
 
+    /** The local list containing contacts. */
     private ObservableList<Contact> contacts;
 
     public Database() {
         contacts = FXCollections.observableArrayList();
     }
 
+    /**
+     * Since we can only create one contact a time, it is acceptable to retrieve the next contact ID from the database.
+     * As a result, the auto-increment feature is made useless.
+     * @return the next contact ID.
+     */
     public static int getNewContactId() {
         try (Connection connection = Sql.getDataSource().getConnection()) {
 
@@ -35,7 +41,14 @@ public class Database {
         throw new IllegalStateException();
     }
 
-    public static ObservableList<Contact> findNotIn(ObservableList<Contact> first, ObservableList<Contact> second) {
+    /**
+     * We establish a list of contacts of the second list that are not in the first list.
+     * We use this for the local and remote contact lists, to establish differences and decide what contacts to add/delete.
+     * @param first
+     * @param second
+     * @return a list of contacts.
+     */
+    private static ObservableList<Contact> findNotIn(ObservableList<Contact> first, ObservableList<Contact> second) {
         ObservableList<Contact> difference = FXCollections.observableArrayList();
 
         first.forEach(contact1 -> {
@@ -60,6 +73,10 @@ public class Database {
         return this.contacts;
     }
 
+    /**
+     * Retrieve contact data from database and returns it as a Contact list.
+     * @return ObservableList of contacts
+     */
     public ObservableList<Contact> pullFromRemote() {
         ObservableList<Contact> remoteList = FXCollections.observableArrayList();
 
@@ -97,40 +114,14 @@ public class Database {
         return remoteList;
     }
 
+    /**
+     * Initialize local contacts list.
+     */
     public void startFromRemote() {
 
         contacts.clear();
 
-        String s = "SELECT * FROM " + Sql.getTableName() + ";";
-
-        try (Connection connection = Sql.getDataSource().getConnection()) {
-
-            try (PreparedStatement statement = connection.prepareStatement(s)) {
-
-                try (ResultSet results = statement.executeQuery()) {
-
-                    while (results.next()) {
-                        Contact cont = new Contact();
-                        try {
-                            cont.setPhone(Contact.toPhone(results.getString("phone")));
-                            cont.setBirth(Contact.toBirth(results.getDate("birth").toString()));
-                            cont.setAddress(Contact.toAddress(results.getString("address")));
-                            cont.setEmail(Contact.toEmail(results.getString("email")));
-                            cont.setName(new Contact.Name(results.getString("firstname"), results.getString("lastname")));
-                            cont.setId(results.getInt("idcontact"));
-                            contacts.add(cont);
-                        } catch (SQLException e) {
-                            Sql.parseSQLException(e);
-                        }
-
-
-                    }
-
-                }
-            }
-        } catch (SQLException e) {
-            Sql.parseSQLException(e);
-        }
+        contacts  = pullFromRemote();
 
         if (contacts.isEmpty()) {
             Error.create("It appears you haven't created any contacts yet! You can import somme dummy data, using provided insertDummyData.sql script.", ContactView.parent);
@@ -138,7 +129,10 @@ public class Database {
 
     }
 
-    public void synchronizeWithRemote() {
+    /**
+     * This method is called each time we modify the local list, to keep the remote database updated.
+     */
+    private void synchronizeWithRemote() {
         ObservableList<Contact> remoteList = pullFromRemote();
 
         ObservableList<Contact> contactsToAddToRemote = findNotIn(contacts, remoteList);
@@ -154,7 +148,11 @@ public class Database {
 
     }
 
-    public void addToRemote(ObservableList<Contact> ol) {
+    /**
+     * Add contact to remote database.
+     * @param ol the contact to add
+     */
+    private void addToRemote(ObservableList<Contact> ol) {
         try (Connection connection = Sql.getDataSource().getConnection()) {
 
             ol.forEach(contact -> {
@@ -180,7 +178,11 @@ public class Database {
         }
     }
 
-    public void deleteFromRemote(ObservableList<Contact> ol) {
+    /**
+     * Delete contact from remote database.
+     * @param ol the contact to delete
+     */
+    private void deleteFromRemote(ObservableList<Contact> ol) {
         try (Connection connection = Sql.getDataSource().getConnection()) {
 
             ol.forEach(contact -> {
@@ -210,6 +212,10 @@ public class Database {
         synchronizeWithRemote();
     }
 
+    /**
+     * Update remote contact.
+     * @param selected the contact to update.
+     */
     public void updateContact(Contact selected) {
         try (Connection connection = Sql.getDataSource().getConnection()) {
 

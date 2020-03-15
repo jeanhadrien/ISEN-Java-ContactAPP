@@ -1,5 +1,10 @@
 public class Contact {
 
+    /**
+     * A contact contains different common attributes.
+     * A contact will accept change on its attributes only if input matches corresponding regex and database max length.
+     */
+
     private Name name;
     private Birth birth;
     private Address address;
