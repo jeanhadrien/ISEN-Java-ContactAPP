@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 public class Sql {
 
@@ -81,10 +80,7 @@ public class Sql {
     private static boolean isConnectionValid(DataSource ds) {
         try {
             Connection connection = ds.getConnection();
-            if (connection.isClosed()) {
-                return false;
-            }
-            return true;
+            return !connection.isClosed();
         } catch (SQLException e) {
             parseSQLException(e);
             return false;

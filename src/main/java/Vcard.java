@@ -1,10 +1,9 @@
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import javax.swing.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class Vcard {
 
@@ -20,12 +19,12 @@ public class Vcard {
         FileOutputStream fop = new FileOutputStream(file);
         String str = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
-                "N:"+selected.getName().getLast()+";"+selected.getName().getFirst()+";;;\n" +
-                "FN:"+selected.getName().toString()+"\n" +
+                "N:" + selected.getName().getLast() + ";" + selected.getName().getFirst() + ";;;\n" +
+                "FN:" + selected.getName().toString() + "\n" +
                 //"ADR;;LABEL='"+selected.getAddress().toString()+"':;;;;;;"+"\n"+
-                "BDAY:"+selected.getBirth().toString()+"\n"+
-                "TEL;TYPE=work,voice;VALUE=tel:"+selected.getPhone().toString()+"\n" +
-                "EMAIL:"+selected.getEmail().toString()+"\n" +
+                "BDAY:" + selected.getBirth().toString() + "\n" +
+                "TEL;TYPE=work,voice;VALUE=tel:" + selected.getPhone().toString() + "\n" +
+                "EMAIL:" + selected.getEmail().toString() + "\n" +
                 "END:VCARD";
         fop.write(str.getBytes());
         fop.flush();

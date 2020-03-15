@@ -6,11 +6,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
-import javax.xml.crypto.Data;
 import java.time.LocalDate;
-import java.time.chrono.ChronoLocalDate;
-import java.time.chrono.Chronology;
-import java.util.Date;
 
 public class ContactEditController {
 
@@ -48,7 +44,7 @@ public class ContactEditController {
         return this.confirmButton;
     }
 
-    public void loadContact(Contact cont){
+    public void loadContact(Contact cont) {
         selected = cont;
         firstname.setText(cont.getName().getFirst());
         lastname.setText(cont.getName().getLast());
@@ -58,12 +54,14 @@ public class ContactEditController {
         birth.setValue(LocalDate.of(cont.getBirth().getYear(), cont.getBirth().getMonth(), cont.getBirth().getDay()));
     }
 
-    public Contact getNewContact(){
-        if(selected != null){ throw new IllegalStateException();}
+    public Contact getNewContact() {
+        if (selected != null) {
+            throw new IllegalStateException();
+        }
 
         Contact cont = new Contact();
 
-        cont.setName(firstname.getText(),lastname.getText());
+        cont.setName(firstname.getText(), lastname.getText());
         cont.setPhone(phone.getText());
         cont.setEmail(email.getText());
         cont.setAddress(address.getText());
@@ -90,7 +88,7 @@ public class ContactEditController {
     }
 
     public void updateSelectedContact() {
-        selected.setName(firstname.getText(),lastname.getText());
+        selected.setName(firstname.getText(), lastname.getText());
         selected.setPhone(phone.getText());
         selected.setEmail(email.getText());
         selected.setAddress(address.getText());

@@ -1,4 +1,3 @@
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -35,7 +34,7 @@ public class SQLConfigWindowController {
 
     }
 
-    public void setFields(SQLConfigWindow.Form form){
+    public void setFields(SQLConfigWindow.Form form) {
         serverField.setText(form.serverField);
         databaseField.setText(form.databaseField);
         userField.setText(form.userField);
@@ -43,14 +42,15 @@ public class SQLConfigWindowController {
         portField.setText(form.portField);
     }
 
-    public void clearPassword(){
+    public void clearPassword() {
         passwordField.clear();
     }
-    public void disableForm(){
+
+    public void disableForm() {
         connectButton.setDisable(true);
     }
 
-    public void enableForm(){
+    public void enableForm() {
         connectButton.setDisable(false);
     }
 }

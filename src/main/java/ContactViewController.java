@@ -48,39 +48,43 @@ public class ContactViewController {
     private Contact selected = null;
 
     @FXML
-    private void sqlButtonPressed(){
+    private void sqlButtonPressed() {
         ContactView.notFocused();
         SQLConfigWindow.show();
     }
 
     @FXML
-    private void exportButtonPressed(){
+    private void exportButtonPressed() {
         ContactView.exportContact(selected);
     }
 
     @FXML
-    private void deleteButtonPressed(){
+    private void deleteButtonPressed() {
         ContactView.deleteContact(selected);
     }
 
     @FXML
-    private void newContactButtonPressed(){
+    private void newContactButtonPressed() {
         ContactEdit.createNew();
     }
 
-    @FXML void editContactButtonPressed(){
-        if(selected!=null){ ContactEdit.editContact(selected); return;}
+    @FXML
+    void editContactButtonPressed() {
+        if (selected != null) {
+            ContactEdit.editContact(selected);
+            return;
+        }
     }
 
-    public ListView<Contact> getList(){
+    public ListView<Contact> getList() {
         return list;
     }
 
-    public Contact getSelected(){
+    public Contact getSelected() {
         return selected;
     }
 
-    public void updateContactDetails(Contact cont){
+    public void updateContactDetails(Contact cont) {
         firstname.setText(cont.getName().getFirst());
         lastname.setText(cont.getName().getLast());
         phone.setText(cont.getPhone().get());
@@ -89,7 +93,6 @@ public class ContactViewController {
         birth.setText(cont.getBirth().get());
         selected = cont;
     }
-
 
 
 }

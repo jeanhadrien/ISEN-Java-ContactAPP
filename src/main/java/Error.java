@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.GaussianBlur;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -42,8 +41,7 @@ public class Error {
     }
 
 
-
-    public static void create(String error, String solution, Parent origin){
+    public static void create(String error, String solution, Parent origin) {
 
         ColorAdjust adj = new ColorAdjust(0, 0, -0.05, 0);
         GaussianBlur blur = new GaussianBlur(10); // 55 is just to show edge effect more clearly.
@@ -60,13 +58,13 @@ public class Error {
             }
         });
 
-        controller.setText("ERROR :  "+error+"\n\nSOLUTION :  "+solution+"\n");
+        controller.setText("ERROR :  " + error + "\n\nSOLUTION :  " + solution + "\n");
         controller.text.setWrapText(true);
         stage.sizeToScene();
         stage.show();
     }
 
-    public static void create(String notif, Parent origin){
+    public static void create(String notif, Parent origin) {
         ColorAdjust adj = new ColorAdjust(0, 0, -0.05, 0);
         GaussianBlur blur = new GaussianBlur(10); // 55 is just to show edge effect more clearly.
         adj.setInput(blur);

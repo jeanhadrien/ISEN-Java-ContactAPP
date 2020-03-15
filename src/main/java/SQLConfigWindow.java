@@ -12,39 +12,10 @@ import java.io.IOException;
  */
 public class SQLConfigWindow {
 
-    /*
-     * A form contains raw String data entered by user for the SQL connection
-     */
-    public static class Form {
-
-        Form(TextField serv, TextField db, TextField usr, PasswordField pw, TextField port) {
-            this.serverField = serv.getText();
-            this.databaseField = db.getText();
-            this.userField = usr.getText();
-            this.passwordField = pw.getText();
-            this.portField = port.getText();
-        }
-
-        public String serverField;
-        public String databaseField;
-        public String userField;
-        public String passwordField;
-        public String portField;
-
-        @Override
-        public String toString() {
-            return "serverField:" + serverField +
-                    "\ndatabaseField:" + databaseField +
-                    "\nuserField:" + userField +
-                    "\npasswordField:" + passwordField +
-                    "\nportField:" + portField;
-        }
-    }
-
-    private static Stage stage;
     public static Parent parent;
-    private static Scene scene;
     public static SQLConfigWindowController controller;
+    private static Stage stage;
+    private static Scene scene;
 
     public static void init() {
         stage = new Stage();
@@ -61,7 +32,7 @@ public class SQLConfigWindow {
         }
 
         stage.setOnCloseRequest(event -> {
-                event.consume();
+            event.consume();
         });
 
         Object temp = loader.getController();
@@ -91,10 +62,11 @@ public class SQLConfigWindow {
 
     }
 
-    public static void show(){
+    public static void show() {
         stage.show();
     }
-    public static void clearPassword(){
+
+    public static void clearPassword() {
         controller.clearPassword();
     }
 
@@ -105,20 +77,46 @@ public class SQLConfigWindow {
 		System.out.println((form.serverField.matches(Regex.IPV4) || form.serverField=="localhost"));
 		System.out.println(form.userField.matches(Regex.USERNAME)); */
 
-        if (form.databaseField.matches(Regex.BASIC)
+        return form.databaseField.matches(Regex.BASIC)
                 && form.portField.matches(Regex.NUMBER_WHOLE)
                 && (form.serverField.matches(Regex.IPV4) || form.serverField.equals("localhost"))
-                && form.userField.matches(Regex.USERNAME)) {
-            return true;
-        } else return false;
+                && form.userField.matches(Regex.USERNAME);
     }
 
-    public static void terminate(){
+    public static void terminate() {
         stage.hide();
         stage = null;
         parent = null;
         scene = null;
         controller = null;
+    }
+
+    /*
+     * A form contains raw String data entered by user for the SQL connection
+     */
+    public static class Form {
+
+        public String serverField;
+        public String databaseField;
+        public String userField;
+        public String passwordField;
+        public String portField;
+        Form(TextField serv, TextField db, TextField usr, PasswordField pw, TextField port) {
+            this.serverField = serv.getText();
+            this.databaseField = db.getText();
+            this.userField = usr.getText();
+            this.passwordField = pw.getText();
+            this.portField = port.getText();
+        }
+
+        @Override
+        public String toString() {
+            return "serverField:" + serverField +
+                    "\ndatabaseField:" + databaseField +
+                    "\nuserField:" + userField +
+                    "\npasswordField:" + passwordField +
+                    "\nportField:" + portField;
+        }
     }
 
 

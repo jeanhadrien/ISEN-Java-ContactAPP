@@ -11,10 +11,10 @@ import java.io.IOException;
 
 public class ContactView {
 
-    private static Stage stage;
     public static Parent parent;
-    private static Scene scene;
     public static ContactViewController controller;
+    private static Stage stage;
+    private static Scene scene;
 
     public static void init() {
         stage = new Stage();
@@ -55,7 +55,7 @@ public class ContactView {
 
     }
 
-    public static void isConnected(){
+    public static void isConnected() {
         parent.setEffect(null);
         parent.setDisable(false);
         App.localDatabase = new Database();
@@ -63,7 +63,7 @@ public class ContactView {
         controller.getList().setItems(App.localDatabase.getContacts());
     }
 
-    public static void notFocused(){
+    public static void notFocused() {
         ColorAdjust adj = new ColorAdjust(0, 0, -0.05, 0);
         GaussianBlur blur = new GaussianBlur(10); // 55 is just to show edge effect more clearly.
         adj.setInput(blur);
@@ -71,12 +71,12 @@ public class ContactView {
         parent.setDisable(true);
     }
 
-    public static void isFocused(){
+    public static void isFocused() {
         parent.setEffect(null);
         parent.setDisable(false);
     }
 
-    public static void terminate(){
+    public static void terminate() {
         stage.hide();
         stage = null;
         parent = null;
@@ -84,11 +84,11 @@ public class ContactView {
         controller = null;
     }
 
-    public static void refreshListView(){
+    public static void refreshListView() {
         controller.getList().refresh();
     }
 
-    public static void updateContactDetails(Contact c){
+    public static void updateContactDetails(Contact c) {
         controller.updateContactDetails(c);
     }
 
@@ -102,7 +102,7 @@ public class ContactView {
 
     public static void exportContact(Contact selected) {
         try {
-            Vcard.exportContact(stage,selected);
+            Vcard.exportContact(stage, selected);
         } catch (IOException e) {
             e.printStackTrace();
         }

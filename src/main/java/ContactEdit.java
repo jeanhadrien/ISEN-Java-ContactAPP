@@ -1,22 +1,18 @@
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.GaussianBlur;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class ContactEdit {
 
-    private static Stage stage;
     public static Parent parent;
-    private static Scene scene;
     public static ContactEditController controller;
+    private static Stage stage;
+    private static Scene scene;
 
     public static void init() {
         stage = new Stage();
@@ -57,11 +53,10 @@ public class ContactEdit {
         controller.getConfirmButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                try{
+                try {
                     App.localDatabase.addContact(controller.getNewContact());
-                }
-                catch(IllegalArgumentException e){
-                    Error.create("Couldn't create contact, please check your input.",ContactEdit.parent);
+                } catch (IllegalArgumentException e) {
+                    Error.create("Couldn't create contact, please check your input.", ContactEdit.parent);
                     return;
                 }
                 ContactView.isFocused();
