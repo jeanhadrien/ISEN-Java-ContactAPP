@@ -32,6 +32,7 @@ public class Config {
      * Loads JSON config file from PATH/FILENAME
      * and stores it as JSONObject in config.
      */
+
     public static void load() {
         if (config != null) {
             config.clear();

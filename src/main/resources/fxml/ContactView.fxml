@@ -14,23 +14,23 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="785.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ContactViewController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../FlatBee.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ContactViewController">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="663.0" minWidth="10.0" prefWidth="332.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="695.0" minWidth="10.0" prefWidth="453.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="250.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="300.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="206.0" minHeight="0.0" prefHeight="42.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="533.0" minHeight="10.0" prefHeight="147.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="581.0" minHeight="10.0" prefHeight="440.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="102.0" minHeight="0.0" prefHeight="56.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="272.0" minHeight="10.0" prefHeight="167.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="390.0" minHeight="10.0" prefHeight="241.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnSpan="2147483647">
          <children>
             <ButtonBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="53.0">
               <buttons>
-                  <Button fx:id="sql" mnemonicParsing="false" onAction="#sqlButtonPressed" text="SQL" />
-                  <Button fx:id="newContact" mnemonicParsing="false" onAction="#newContactButtonPressed" text="New" />
+                  <Button fx:id="sql" mnemonicParsing="false" onAction="#sqlButtonPressed" style="-fx-font-size: 13;" text="SQL" />
+                  <Button fx:id="newContact" mnemonicParsing="false" onAction="#newContactButtonPressed" style="-fx-font-size: 13; -fx-background-color: #2ecc71;" stylesheets="@../FlatBee.css" text="New" />
               </buttons>
                <opaqueInsets>
                   <Insets />
@@ -47,17 +47,17 @@
       </VBox>
       <TilePane prefHeight="425.0" prefWidth="453.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <children>
-            <Button fx:id="edit" mnemonicParsing="false" onAction="#editContactButtonPressed" text="Edit ...">
+            <Button fx:id="edit" mnemonicParsing="false" onAction="#editContactButtonPressed" prefHeight="27.0" prefWidth="75.0" style="-fx-font-size: 13; -fx-background-color: #2ecc71;" text="Edit ...">
                <TilePane.margin>
                   <Insets right="10.0" />
                </TilePane.margin>
             </Button>
-            <Button fx:id="delete" mnemonicParsing="false" onAction="#deleteButtonPressed" text="Delete">
+            <Button fx:id="delete" mnemonicParsing="false" onAction="#deleteButtonPressed" prefHeight="27.0" prefWidth="75.0" style="-fx-font-size: 13;" text="Delete">
                <TilePane.margin>
                   <Insets right="10.0" />
                </TilePane.margin>
             </Button>
-            <Button fx:id="export" mnemonicParsing="false" onAction="#exportButtonPressed" text="Export">
+            <Button fx:id="export" mnemonicParsing="false" onAction="#exportButtonPressed" prefHeight="27.0" prefWidth="75.0" style="-fx-font-size: 13;" text="Export">
                <TilePane.margin>
                   <Insets right="10.0" />
                </TilePane.margin>
@@ -69,14 +69,14 @@
       </TilePane>
       <VBox fx:id="contactDetails" prefHeight="153.0" prefWidth="365.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <HBox prefHeight="27.0" prefWidth="365.0">
+            <HBox>
                <children>
-                  <Text fx:id="firstname" strokeType="OUTSIDE" strokeWidth="0.0" text="Alexis">
+                  <Text fx:id="firstname" fill="#188344" stroke="#1e8348" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="0.5" style="-fx-font-size: 19;" text="Alexis">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" top="5.0" />
                      </HBox.margin>
                   </Text>
-                  <Text fx:id="lastname" strokeType="OUTSIDE" strokeWidth="0.0" text="DAMAY">
+                  <Text fx:id="lastname" fill="#188344" stroke="#1e8348" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="0.5" style="-fx-font-size: 19;" text="DAMAY">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
@@ -86,22 +86,22 @@
                   <Insets bottom="5.0" top="5.0" />
                </VBox.margin>
             </HBox>
-            <Text fx:id="phone" strokeType="OUTSIDE" strokeWidth="0.0" text="07239543923">
+            <Text fx:id="phone" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 13;" text="07239543923">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Text>
-            <Text fx:id="email" strokeType="OUTSIDE" strokeWidth="0.0" text="jh.damay@gmail.com">
+            <Text fx:id="email" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 13;" text="jh.damay@gmail.com">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Text>
-            <Text fx:id="address" strokeType="OUTSIDE" strokeWidth="0.0" text="74 rue Meurein">
+            <Text fx:id="address" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 13;" text="74 rue Meurein">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Text>
-            <Text fx:id="birth" strokeType="OUTSIDE" strokeWidth="0.0" text="10/07/1993">
+            <Text fx:id="birth" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 13;" text="10/07/1993">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
@@ -111,8 +111,11 @@
                   <Insets right="10.0" />
                </padding></Separator>
          </children>
+         <GridPane.margin>
+            <Insets left="5.0" />
+         </GridPane.margin>
       </VBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="600.0" prefWidth="332.0" GridPane.rowIndex="1" GridPane.rowSpan="2147483647">
+      <HBox alignment="CENTER_LEFT" GridPane.rowIndex="1" GridPane.rowSpan="2147483647">
          <children>
             <VBox>
                <children>
@@ -121,18 +124,18 @@
                         <Insets left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </TextField>
-                  <ListView fx:id="list" VBox.vgrow="ALWAYS">
+                  <ListView fx:id="list" prefWidth="104.0" VBox.vgrow="ALWAYS">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </ListView>
-                  <Separator orientation="VERTICAL">
-                     <padding>
-                        <Insets bottom="10.0" />
-                     </padding>
-                  </Separator>
                </children>
             </VBox>
+            <Separator orientation="VERTICAL">
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
+            </Separator>
          </children>
       </HBox>
    </children>

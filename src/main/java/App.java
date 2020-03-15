@@ -26,7 +26,9 @@ public class App extends Application {
     @Override
     public void start(Stage mainStage) {
         localDatabase = new Database();
+
         Config.load();
+
         Error.init();
         ContactView.init();
         ContactEdit.init();
